@@ -54,3 +54,11 @@ group :development do
   # gem "spring"
 end
 
+
+gem "rspec-rails", "~> 7.1", :groups => [:development, :test]
+
+gem "sidekiq", "~> 7.3"
+
+gem "mail", "~> 2.9"
+
+gem "nokogiri", "~> 1.17"
