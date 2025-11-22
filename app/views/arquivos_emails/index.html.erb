@@ -1,0 +1,29 @@
+<h1>Arquivos Enviados</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Arquivo</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @arquivos.each do |arq| %>
+      <tr>
+        <td><%= arq.id %></td>
+        <td><%= arq.processado? ? 'Processado' : 'Pendente' %></td>
+        <td>
+          <% if arq.arquivo_email.attached? %>
+            <%= link_to arq.arquivo_email.filename.to_s, url_for(arq.arquivo_email) %>
+          <% else %>
+            Sem arquivo
+          <% end %>
+        </td>
+        <td><%= l arq.created_at, format: :short %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,8 @@
+<h1>Teste de Upload</h1>
+
+<%= form_with model: @arquivo, url: arquivos_teste_index_path, local: true do |f| %>
+  <%= f.text_field :nome %><br>
+<%= f.file_field :arquivo_email %>
+<br>
+  <%= f.submit "Enviar" %>
+<% end %>

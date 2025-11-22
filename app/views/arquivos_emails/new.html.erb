@@ -1,0 +1,14 @@
+<h1>Enviar Arquivo .eml</h1>
+
+<%= form_with model: @arquivo_email,
+              url: arquivos_emails_path,
+              local: true,
+              html: { multipart: true } do |f| %>
+
+  <div class="mb-3">
+    <%= f.label :arquivo_email, "Arquivo .eml" %>
+    <%= f.file_field :arquivo_email, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Enviar", class: "btn btn-primary" %>
+<% end %>
