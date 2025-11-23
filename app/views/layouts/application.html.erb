@@ -42,34 +42,36 @@
     
         <div class="collapse navbar-collapse" id="mainNavbar">
           <ul class="navbar-nav ms-auto">
+
             <!-- Clientes -->
             <li class="nav-item">
-              <%= link_to clientes_index_path, class: "nav-link" do %>
-                <button class="btn btn-outline-light btn-sm d-flex align-items-center">
+              <%= link_to clientes_path, class: "nav-link" do %>
+                <button class="btn btn-sm d-flex align-items-center <%= 'btn-light text-dark' if current_page?(clientes_path) %> <%= 'btn-outline-light' unless current_page?(clientes_path) %>">
                   <i class="fa-solid fa-users me-2"></i> Clientes
                 </button>
               <% end %>
             </li>
-    
+          
             <!-- Processamentos -->
-            <li class="nav-item ">
-              <%= link_to logs_processamentos_index_path, class: "nav-link" do %>
-                <button class="btn btn-outline-light btn-sm d-flex align-items-center">
+            <li class="nav-item">
+              <%= link_to logs_processamentos_path, class: "nav-link" do %>
+                <button class="btn btn-sm d-flex align-items-center <%= 'btn-light text-dark' if current_page?(logs_processamentos_path) %> <%= 'btn-outline-light' unless current_page?(logs_processamentos_path) %>">
                   <i class="fa-solid fa-clock-rotate-left me-2"></i> Processamentos
                 </button>
               <% end %>
             </li>
-    
-            <!-- Novo Arquivo -->
-            <li class="nav-item ">
-              <%= link_to new_arquivos_email_path, class: "nav-link" do %>
-                <button class="btn btn-outline-light btn-sm d-flex align-items-center">
-                  <i class="fa-solid fa-file-circle-plus me-2"></i> Novo Arquivo
+          
+            <!-- Arquivos (index) -->
+            <li class="nav-item">
+              <%= link_to arquivos_emails_path, class: "nav-link" do %>
+                <button class="btn btn-sm d-flex align-items-center <%= 'btn-light text-dark' if current_page?(arquivos_emails_path) %> <%= 'btn-outline-light' unless current_page?(arquivos_emails_path) %>">
+                  <i class="fa-solid fa-file me-2"></i> Arquivos
                 </button>
               <% end %>
             </li>
-    
+          
           </ul>
+          
         </div>
     
       </div>

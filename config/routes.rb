@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   get 'home/index'
-  get 'logs_processamentos/index'
-  get 'logs_processamentos/show'
-  get 'clientes/index'
-  get 'clientes/show'
+  resources :logs_processamentos, only: [:index, :show]
+  resources :clientes, only: [:index, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   require 'sidekiq/web'
   mount Sidekiq::Web => "/sidekiq"

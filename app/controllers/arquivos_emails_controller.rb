@@ -10,15 +10,35 @@ class ArquivosEmailsController < ApplicationController
   end
 
   def create
-    @arquivo_email = ArquivoEmail.new(arquivo_email_params)
-
+    if params[:arquivo_email] && params[:arquivo_email][:arquivo_id]
+      # reprocessar existente
+      @arquivo_email = ArquivoEmail.find(params[:arquivo_email][:arquivo_id])
+    else
+      # novo upload
+      @arquivo_email = ArquivoEmail.new(arquivo_email_params)
+    end
+  
     if @arquivo_email.save
       ProcessarEmailJob.perform_now(@arquivo_email.id)
-      redirect_to arquivos_email_path(@arquivo_email)
+  
+      # Buscar o último log criado para esse arquivo
+      log = LogProcessamento.where(arquivo_email_id: @arquivo_email.id)
+                            .order(created_at: :desc)
+                            .first
+  
+      if log
+        redirect_to logs_processamento_path(log), notice: "Processamento finalizado."
+      else
+        redirect_to arquivos_email_path(@arquivo_email), notice: "Processamento finalizado (sem logs)."
+      end
+  
     else
       render :new
     end
   end
+  
+  
+  
 
   def show
     @arquivo    = ArquivoEmail.find(params[:id])

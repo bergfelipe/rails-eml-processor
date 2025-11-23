@@ -1,4 +1,15 @@
-<h1>Enviar Arquivo .eml</h1>
+<br>
+
+<div class="mb-4 ps-2">
+  <h2 class="fw-bold d-flex align-items-center">
+    <%= link_to arquivos_emails_path, class: "text-decoration-none me-2" do %>
+      <i class="fa-solid fa-arrow-left text-primary"></i>
+    <% end %>
+
+    Enviar Arquivo .eml
+  </h2>
+  <p class="text-muted mb-0">Selecione um arquivo para processar</p>
+</div>
 
 <%= form_with model: @arquivo_email,
               url: arquivos_emails_path,

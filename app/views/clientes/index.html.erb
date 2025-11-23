@@ -1,2 +1,63 @@
-<h1>Clientes#index</h1>
-<p>Find me in app/views/clientes/index.html.erb</p>
+<br>
+<div class="col-md-12">
+  <div class="card shadow-sm p-3" style="border-radius: 14px;">
+
+    <h4 class="mb-3 d-flex align-items-center fw-bold">
+      <i class="fa-solid fa-users text-primary me-2"></i>
+      Clientes
+    </h4>
+
+    <table class="table table-hover table-sm align-middle">
+      <thead class="table-light">
+        <tr>
+          <th class="text-muted">ID</th>
+          <th class="text-muted">Nome</th>
+          <th class="text-muted">Email</th>
+          <th class="text-muted">Telefone</th>
+          <th class="text-end text-muted" style="width: 70px;">Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if @clientes.blank? %>
+          <tr>
+            <td colspan="5" class="text-muted text-center py-3">
+              Nenhum cliente encontrado.
+            </td>
+          </tr>
+        <% else %>
+          <% @clientes.each do |c| %>
+            <tr>
+              <td><span class="badge bg-secondary"><%= c.id %></span></td>
+
+              <td class="fw-semibold">
+                <i class="fa-solid fa-user text-primary me-1"></i>
+                <%= c.nome %>
+              </td>
+
+              <td>
+                <i class="fa-solid fa-envelope me-1 text-muted"></i>
+                <%= c.email %>
+              </td>
+
+              <td>
+                <i class="fa-solid fa-phone me-1 text-muted"></i>
+                <%= c.telefone %>
+              </td>
+
+              <td class="text-end">
+                <%= link_to cliente_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
+  <i class="fa-solid fa-eye"></i>
+<% end %>
+
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+   
+
+  </div>
+</div>

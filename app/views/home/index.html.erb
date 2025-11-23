@@ -35,7 +35,7 @@
                     <td><%= c.email %></td>
                     <td><%= c.telefone %></td>
                     <td class="text-end">
-                      <%= link_to clientes_index_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
+                      <%= link_to cliente_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
                         <i class="fa-solid fa-eye"></i>
                       <% end %>
                     </td>
@@ -46,7 +46,7 @@
           </table>
   
           <div class="text-end">
-            <%= link_to clientes_index_path, class: "btn btn-outline-secondary btn-sm" do %>
+            <%= link_to clientes_path, class: "btn btn-outline-secondary btn-sm" do %>
               <i class="fa-solid fa-list"></i> Ver todos
             <% end %>
           </div>
@@ -69,7 +69,7 @@
             <thead>
               <tr>
                 <th>Arquivo</th>
-                <th>Processado</th>
+                <th class="text-center">Processado</th>
                 <th style="width: 55px;"></th>
               </tr>
             </thead>
@@ -91,14 +91,26 @@
                         Sem arquivo
                       <% end %>
                     </td>
-                    <td class="">
-                      <%= arq.processado %>
-                    </td>
-                    <td class="text-end">
-                      <%= link_to arquivos_email_path(arq), class: "btn btn-outline-info btn-sm p-1" do %>
-                        <i class="fa-solid fa-eye"></i>
-                      <% end %>
-                    </td>
+                    <td class="text-center">
+                        <% if arq.processado %>
+                          <span class="text-success fw-bold">✔️</span>
+                        <% else %>
+                          <span class="text-danger fw-bold">✖️</span>
+                        <% end %>
+                      </td>
+                      
+                      <td class="text-end">
+                        <%= button_to arquivos_emails_path,
+                        method: :post,
+                        params: { arquivo_email: { arquivo_id: arq.id } },
+                        class: "btn-reprocessar btn btn-outline-warning btn-sm p-1",
+                        form: { class: "form-reprocessar" } do %>
+                  
+                    <i class="fa-solid fa-rotate-right"></i>
+                  
+                  <% end %>
+                  
+                      </td>   
                   </tr>
                 <% end %>
               <% end %>
@@ -113,7 +125,18 @@
 
       </div>
     </div>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          document.querySelectorAll(".form-reprocessar").forEach(form => {
+            form.addEventListener("submit", function (event) {
+              if (!confirm("Deseja reprocessar este arquivo?")) {
+                event.preventDefault();
+              }
+            });
+          });
+        });
+        </script>
+        
     <!-- PROCESSAMENTOS -->
     <div class="col-md-6">
       <div class="card shadow-sm p-3" style="border-radius: 14px;">
@@ -154,9 +177,10 @@
 
                   <td><%= truncate(log.mensagem, length: 28) %></td>
                   <td class="text-end">
-                    <%= link_to arquivos_email_path(log.arquivo_email_id), class: "btn btn-outline-info btn-sm p-1" do %>
-                      <i class="fa-solid fa-eye"></i>
-                    <% end %>
+                    <%= link_to logs_processamento_path(log), class: "btn btn-outline-info btn-sm p-1" do %>
+  <i class="fa-solid fa-eye"></i>
+<% end %>
+
                   </td>
                 </tr>
               <% end %>
@@ -165,7 +189,7 @@
         </table>
 
         <div class="text-end">
-          <%= link_to logs_processamentos_index_path, class: "btn btn-outline-secondary btn-sm" do %>
+          <%= link_to logs_processamentos_path, class: "btn btn-outline-secondary btn-sm" do %>
             <i class="fa-solid fa-list"></i> Ver todos
           <% end %>
         </div>

@@ -1,2 +1,127 @@
-<h1>LogsProcessamentos#show</h1>
-<p>Find me in app/views/logs_processamentos/show.html.erb</p>
+<div class="container mt-4">
+
+  <!-- Título -->
+  <div class="mb-4 position-relative">
+
+    <!-- BOTÃO DE VOLTAR -->
+    <%= link_to (request.referer || arquivos_emails_path), class: "position-absolute top-0 start-0 mt-1 me-2 text-dark" do %>
+      <i class="bi bi-arrow-left fs-4"></i>
+    <% end %>
+  
+    <h2 class="fw-bold d-flex align-items-center ps-5">
+      <i class="fa-solid fa-file-waveform text-primary me-2"></i>
+      Resultado do Processamento
+    </h2>
+  
+    <p class="text-muted mb-0 ps-5">
+      Detalhes completos do arquivo e do log
+    </p>
+  </div>
+  
+
+  <!-- CARD DO ARQUIVO -->
+  <div class="card shadow-sm mb-4" style="border-radius: 16px;">
+    <div class="card-body">
+
+      <h4 class="fw-semibold mb-3 d-flex align-items-center">
+        <i class="fa-solid fa-file-lines me-2 text-secondary"></i>
+        Informações do Arquivo
+      </h4>
+
+      <p><strong>ID do Arquivo:</strong> <%= @arquivo.id %></p>
+
+      <p>
+        <strong>Nome do arquivo:</strong>
+        <% if @arquivo.arquivo_email.attached? %>
+          <%= link_to @arquivo.arquivo_email.filename.to_s, url_for(@arquivo.arquivo_email), class: "text-decoration-none" %>
+        <% else %>
+          <span class="text-danger">Arquivo não anexado</span>
+        <% end %>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- CARD STATUS -->
+  <div class="card shadow-sm mb-4" style="border-radius: 16px;">
+    <div class="card-body">
+
+      <h4 class="fw-semibold mb-3 d-flex align-items-center">
+        <i class="fa-solid fa-circle-info me-2 text-secondary"></i>
+        Status do Processamento
+      </h4>
+
+      <% if @log %>
+        <% if @log.status == "sucesso" %>
+          <span class="badge bg-success rounded-pill px-3 py-2">
+            <i class="fa-solid fa-check me-1"></i> Sucesso
+          </span>
+        <% else %>
+          <span class="badge bg-danger rounded-pill px-3 py-2">
+            <i class="fa-solid fa-triangle-exclamation me-1"></i> Falha
+          </span>
+        <% end %>
+
+        <p class="mt-3"><strong>Mensagem:</strong> <%= @log.mensagem %></p>
+      <% else %>
+        <p class="text-muted">Nenhum log encontrado.</p>
+      <% end %>
+
+    </div>
+  </div>
+
+  <!-- CARD LOG COMPLETO -->
+  <div class="card shadow-sm mb-4" style="border-radius: 16px;">
+    <div class="card-body">
+
+      <h4 class="fw-semibold mb-3 d-flex align-items-center">
+        <i class="fa-solid fa-code me-2 text-secondary"></i>
+        Log Completo
+      </h4>
+
+      <pre class="bg-light p-3 rounded" style="font-size: 0.9rem;">
+<%= JSON.pretty_generate(@log&.dados_extraidos || {}) %>
+      </pre>
+
+    </div>
+  </div>
+
+  <!-- CARD DO CLIENTE -->
+  <div class="card shadow-sm mb-4" style="border-radius: 16px;">
+    <div class="card-body">
+
+      <h4 class="fw-semibold mb-3 d-flex align-items-center">
+        <i class="fa-solid fa-user me-2 text-secondary"></i>
+        Cliente Identificado
+      </h4>
+
+      <% if @cliente %>
+        <!-- CLIENTE VINCULADO -->
+        <p><strong>Nome:</strong> <%= @cliente.nome %></p>
+        <p><strong>Email:</strong> <%= @cliente.email %></p>
+        <p><strong>Telefone:</strong> <%= @cliente.telefone %></p>
+
+        <%= link_to "Ver cliente completo", cliente_path(@cliente), class: "btn btn-outline-primary mt-2" %>
+
+      <% elsif @cliente_existente %>
+        <!-- CLIENTE ACHADO VIA EMAIL / TELEFONE -->
+        <div class="alert alert-warning">
+          <i class="fa-solid fa-circle-exclamation me-1"></i>
+          Cliente não estava vinculado, mas encontramos um cadastro existente.
+        </div>
+
+        <p><strong>Nome:</strong> <%= @cliente_existente.nome %></p>
+        <p><strong>Email:</strong> <%= @cliente_existente.email %></p>
+        <p><strong>Telefone:</strong> <%= @cliente_existente.telefone %></p>
+
+        <%= link_to "Abrir cadastro", cliente_path(@cliente_existente), class: "btn btn-outline-warning mt-2" %>
+
+      <% else %>
+        <!-- NENHUM CLIENTE -->
+        <p class="text-muted">Nenhum cliente criado.</p>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

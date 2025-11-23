@@ -1,35 +1,71 @@
-<h1>Resultado do Processamento</h1>
+<div class="container mt-4">
 
-  <p><strong>ID do Arquivo:</strong> <%= @arquivo.id %></p>
-  <p><strong>Nome do arquivo:</strong> <%= @arquivo.arquivo_email.filename %></p>
+  <!-- Título -->
+  <div class="mb-4 ps-2 d-flex align-items-center">
   
-  <hr>
-  
-  <h2>Status</h2>
-  <p><%= @log&.status || "Nenhum log encontrado" %></p>
-  
-  <h2>Mensagem</h2>
-  <p><%= @log&.mensagem || "Sem mensagem" %></p>
-  
-  <hr>
-  
-  <h2>Log completo</h2>
-  <pre><%= JSON.pretty_generate(@log&.dados_extraidos || {}) %></pre>
-  
-  <hr>
-  
-  <h2>Cliente</h2>
-  <% if @cliente %>
-    <p><strong>Nome:</strong> <%= @cliente.nome %></p>
-    <p><strong>Email:</strong> <%= @cliente.email %></p>
-    <p><strong>Telefone:</strong> <%= @cliente.telefone %></p>
-  
-    <%= link_to "Ver cliente completo", clientes_index_path(@cliente), class: "btn btn-info" %>
-  <% else %>
-    <p>Nenhum cliente criado.</p>
+  <!-- Botão voltar -->
+  <%= link_to request.referer || arquivos_emails_path,
+      class: "btn btn-outline-dark btn-sm me-3 d-flex align-items-center",
+      style: "border-radius: 10px;" do %>
+    <i class="fa-solid fa-arrow-left"></i>
   <% end %>
-  
-  <hr>
-  
-  <%= link_to "Voltar", arquivos_emails_path, class: "btn btn-secondary" %>
-  
+
+  <div>
+    <h2 class="fw-bold d-flex align-items-center mb-1">
+      <i class="fa-solid fa-file-circle-check text-primary me-2"></i>
+      Arquivo <%= @arquivo.id %>
+    </h2>
+    <p class="text-muted mb-0">Resultado do processamento</p>
+  </div>
+</div>
+
+
+  <!-- Card principal -->
+  <div class="card shadow-sm p-4" style="border-radius: 16px;">
+
+    <!-- Nome do arquivo -->
+    <h4 class="mb-3 d-flex align-items-center">
+      <i class="fa-solid fa-file-lines me-2 text-secondary"></i>
+      <%= @arquivo.arquivo_email.filename %>
+    </h4>
+
+    <hr>
+
+    <!-- Status -->
+    <h5 class="fw-bold">Status</h5>
+    <p><%= @log&.status || "Nenhum log encontrado" %></p>
+
+    <!-- Mensagem -->
+    <h5 class="fw-bold mt-3">Mensagem</h5>
+    <p><%= @log&.mensagem || "Sem mensagem" %></p>
+
+    <hr>
+
+    <!-- Log completo -->
+    <h5 class="fw-bold">Log completo</h5>
+    <pre style="background: #f8f9fa; padding: 12px; border-radius: 10px;">
+<%= JSON.pretty_generate(@log&.dados_extraidos || {}) %>
+    </pre>
+
+    <hr>
+
+    <!-- Cliente -->
+    <h5 class="fw-bold">Cliente</h5>
+    <% if @cliente %>
+      <p><strong>Nome:</strong> <%= @cliente.nome %></p>
+      <p><strong>Email:</strong> <%= @cliente.email %></p>
+      <p><strong>Telefone:</strong> <%= @cliente.telefone %></p>
+
+      <%= link_to cliente_path(@cliente),
+          class: "btn btn-outline-info btn-sm mt-2 d-inline-flex align-items-center" do %>
+        <i class="fa-solid fa-user me-1"></i> Ver cliente
+      <% end %>
+    <% else %>
+      <p class="text-muted">Nenhum cliente criado.</p>
+    <% end %>
+
+  </div>
+
+
+
+</div>

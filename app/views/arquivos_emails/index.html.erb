@@ -1,177 +1,101 @@
-<br>
-<h1 class="mb-4">
-    <i class="fa-solid fa-chart-line me-2"></i>
-    Dashboard
-  </h1>
-  
-  <div class="mb-4">
-    <%= link_to new_arquivos_email_path, class: "btn btn-outline-primary align-items-center" do %>
-      <i class="fa-solid fa-file-circle-plus me-2"></i> Enviar novo arquivo
+<div class="container mt-4">
+
+  <!-- TÍTULO -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold d-flex align-items-center">
+      <i class="fa-solid fa-folder-open text-primary me-2"></i>
+      Arquivos
+    </h2>
+
+    <%= link_to new_arquivos_email_path, class: "btn btn-outline-primary btn-sm d-flex align-items-center" do %>
+      <i class="fa-solid fa-file-circle-plus me-2"></i> Novo Arquivo
     <% end %>
   </div>
-  
-  <div class="row mt-4">
 
-    <!-- CLIENTES -->
-    <div class="col-md-6">
-      <div class="card shadow-sm p-3" style="border-radius: 14px;">
-        <h4 class="mb-3 d-flex align-items-center">
-          <i class="fa-solid fa-users me-2"></i> Clientes
-        </h4>
-  
-        <table class="table table-sm align-middle" style="width: 98%;">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Email</th>
-              <th style="width: 55px;"></th>
-            </tr>
-          </thead>
-  
-          <tbody>
-            <% if @clientes.blank? %>
-              <tr>
-                <td colspan="3" class="text-muted text-center py-3">
-                  Nenhum cliente encontrado.
-                </td>
-              </tr>
-            <% else %>
-              <% @clientes.limit(9).each do |c| %>
-                <tr>
-                  <td><%= c.nome %></td>
-                  <td><%= c.email %></td>
-                  <td class="text-end">
-                    <%= link_to clientes_index_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
-                      <i class="fa-solid fa-eye"></i>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-          
-        </table>
-  
-        <div class="text-end">
-          <%= link_to clientes_index_path, class: "btn btn-outline-secondary btn-sm" do %>
-            <i class="fa-solid fa-list"></i> Ver todos
-          <% end %>
-        </div>
-      </div>
-    </div>
-  
-    <!-- PROCESSAMENTOS -->
-    <div class="col-md-6">
-      <div class="card shadow-sm p-3" style="border-radius: 14px;">
-        <h4 class="mb-3 d-flex align-items-center">
-          <i class="fa-solid fa-clock-rotate-left me-2"></i> Processamentos
-        </h4>
-  
-        <table class="table table-sm align-middle" style="width: 98%;">
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Mensagem</th>
-              <th style="width: 55px;"></th>
-            </tr>
-          </thead>
-  
-          <tbody>
-            <% if @logs.blank? %>
-              <tr>
-                <td colspan="3" class="text-muted text-center py-3">
-                  Nenhum processamento encontrado.
-                </td>
-              </tr>
-            <% else %>
-              <% @logs.limit(9).each do |log| %>
-                <tr>
-                  <td>
-                    <% if log.status == "sucesso" %>
-                      <span class="badge bg-success">
-                        <i class="fa-solid fa-check me-1"></i> Sucesso
-                      </span>
-                    <% else %>
-                      <span class="badge bg-danger">
-                        <i class="fa-solid fa-triangle-exclamation me-1"></i> Falha
-                      </span>
-                    <% end %>
-                  </td>
-          
-                  <td><%= truncate(log.mensagem, length: 28) %></td>
-                  <td class="text-end">
-                    <%= link_to arquivos_email_path(log.arquivo_email_id), class: "btn btn-outline-info btn-sm p-1" do %>
-                      <i class="fa-solid fa-eye"></i>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-          
-        </table>
-  
-        <div class="text-end">
-          <%= link_to logs_processamentos_index_path, class: "btn btn-outline-secondary btn-sm" do %>
-            <i class="fa-solid fa-list"></i> Ver todos
-          <% end %>
-        </div>
-      </div>
-    </div>
+  <!-- CARD -->
+  <div class="card shadow-sm p-3" style="border-radius: 14px;">
 
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 40%">Arquivo</th>
+          <th style="width: 20%">Processado</th>
+          <th style="width: 40%" class="text-end">Ações</th>
+        </tr>
+      </thead>
 
-
-  
-  </div>
-
-  <div class="col-md-6">
-    <div class="card shadow-sm p-3" style="border-radius: 14px;">
-      <h4 class="mb-3 d-flex align-items-center">
-        <i class="fa-solid fa-folder-open me-2"></i> Arquivos
-      </h4>
-  
-      <table class="table table-sm align-middle" style="width: 98%;">
-        <thead>
+      <tbody>
+        <% if @arquivos_email.blank? %>
           <tr>
-            <th>Arquivo</th>
-            <th>Processado</th>
-            <th style="width: 55px;"></th>
+            <td colspan="3" class="text-center text-muted py-4">
+              Nenhum arquivo enviado ainda.
+            </td>
           </tr>
-        </thead>
-  
-        <tbody>
-          <% if @arquivos_email.blank? %>
+        <% else %>
+          <% @arquivos_email.each do |arq| %>
             <tr>
-              <td colspan="2" class="text-muted text-center py-3">
-                Nenhum arquivo enviado.
+              <td>
+                <% if arq.arquivo_email.attached? %>
+                  <%= link_to arq.arquivo_email.filename.to_s, url_for(arq.arquivo_email), class: "fw-semibold text-decoration-none" %>
+                <% else %>
+                  <span class="text-muted">Sem arquivo</span>
+                <% end %>
               </td>
-            </tr>
-          <% else %>
-            <% @arquivos_email.limit(9).each do |arq| %>
-              <tr>
-                <td>
-                  <% if arq.arquivo_email.attached? %>
-                    <%= link_to arq.arquivo_email.filename.to_s, url_for(arq.arquivo_email) %>
-                  <% else %>
-                    Sem arquivo
-                  <% end %>
-                </td>
-                <td class="">
-                  <%= arq.processado %>
-                </td>
-                <td class="text-end">
-                  <%= link_to arquivos_email_path(arq), class: "btn btn-outline-info btn-sm p-1" do %>
+
+              <td>
+                <% if arq.processado %>
+                  <span class="badge bg-success">
+                    <i class="fa-solid fa-check me-1"></i> Sim
+                  </span>
+                <% else %>
+                  <span class="badge bg-secondary">
+                    <i class="fa-solid fa-xmark me-1"></i> Não
+                  </span>
+                <% end %>
+              </td>
+
+              <td class="text-end">
+
+                <div class="d-inline-flex gap-1">
+              
+                  <!-- VER -->
+                  <%= link_to arquivos_email_path(arq),
+                      class: "btn btn-outline-info btn-sm px-2 py-1" do %>
                     <i class="fa-solid fa-eye"></i>
                   <% end %>
-                </td>
-              </tr>
+              
+                  <!-- REPROCESSAR -->
+                  <%= button_to arquivos_emails_path,
+                  method: :post,
+                  params: { arquivo_email: { arquivo_id: arq.id } },
+                  class: "btn-reprocessar btn btn-outline-warning btn-sm px-2 py-1",
+                  form: { class: "form-reprocessar " } do %>
+            
+              <i class="fa-solid fa-rotate-right"></i>
+            
             <% end %>
+            
+              
+                </div>
+              
+              </td>
+              
+            </tr>
           <% end %>
-        </tbody>
-      </table>
-  
-      
-    </div>
+        <% end %>
+      </tbody>
+    </table>
+
   </div>
-  
-  
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".form-reprocessar").forEach(form => {
+      form.addEventListener("submit", function (event) {
+        if (!confirm("Deseja reprocessar este arquivo?")) {
+          event.preventDefault();
+        }
+      });
+    });
+  });
+  </script>
