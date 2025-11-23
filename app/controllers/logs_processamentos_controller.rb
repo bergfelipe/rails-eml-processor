@@ -8,13 +8,23 @@ class LogsProcessamentosController < ApplicationController
     @arquivo    = ArquivoEmail.find_by(id: @log.arquivo_email_id)
     @cliente    = Cliente.find_by(id: @log&.cliente_id)
   
-    # Buscar cliente existente caso não haja cliente vinculado
-    if @cliente.nil? && @log.dados_extraidos.present?
-      email = @log.dados_extraidos["email"]
-      telefone = @log.dados_extraidos["telefone"]
+    # Pega dados extraídos
+dados = @log&.dados_extraidos || {}
+email = dados["email"]
+telefone = dados["telefone"]
+
+# Procura cliente somente se @cliente ainda não existe
+if @cliente.nil? && (email.present? || telefone.present?)
   
-      @cliente_existente = Cliente.find_by(email: email) || Cliente.find_by(telefone: telefone)
+  @cliente_existente =
+    if email.present?
+      Cliente.find_by(email: email)
+    elsif telefone.present?
+      Cliente.find_by(telefone: telefone)
     end
+
+end
+
   end
   
 end

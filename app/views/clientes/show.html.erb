@@ -54,7 +54,8 @@
               <tr>
                 <th>ID</th>
                 <th>Status</th>
-                <th>Mensagem</th>
+                <th>Remetente</th>
+                <th>Produto</th>
                 <th style="width: 50px;"></th>
               </tr>
             </thead>
@@ -77,8 +78,11 @@
                   </td>
 
                   <td>
-                    <%= truncate(log.mensagem, length: 40) %>
+                    <%= log.remetente %>
                   </td>
+                  <td>
+                  <%= log.produto %>
+                </td>
 
                   <td class="text-end">
                     <%= link_to logs_processamento_path(log),

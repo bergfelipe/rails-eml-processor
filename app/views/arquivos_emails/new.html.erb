@@ -16,10 +16,13 @@
               local: true,
               html: { multipart: true } do |f| %>
 
-  <div class="mb-3">
-    <%= f.label :arquivo_email, "Arquivo .eml" %>
-    <%= f.file_field :arquivo_email, class: "form-control" %>
-  </div>
+              <div class="mb-3">
+                <%= f.label :arquivo_email, "Arquivo .eml" %>
+                <%= f.file_field :arquivo_email,
+                      accept: ".eml",
+                      class: "form-control" %>
+              </div>
+              
 
   <%= f.submit "Enviar", class: "btn btn-primary" %>
 <% end %>
