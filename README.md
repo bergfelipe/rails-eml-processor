@@ -32,7 +32,7 @@ Em /arquivos_emails/new existe um formulário de upload:
 
 ---
 
-### 👥 2. Listar clientes criados
+### 2. Listar clientes criados
 
 A página **Customers** (`/clientes`) exibe uma listagem com os dados básicos de cada cliente:
 
@@ -62,7 +62,7 @@ Além disso, o show do cliente contém:
 
 ---
 
-### 📄 3. Visualizar logs de processamento
+### 3. Visualizar logs de processamento
 
 A página **Logs de Processamento** (`/logs_processamentos`) exibe uma listagem dos logs gerados pelos parsers:
 
@@ -100,21 +100,21 @@ No show do log existe também:
 Isso permite navegar entre cliente ↔ log com facilidade.
 
 
-## ⚙️ Arquitetura da Aplicação
+## Arquitetura da Aplicação
 
 ### Estrutura principal
 
-A aplicação contém as seguintes classes principais:
+A aplicação contém 4 classes principais:
 
 ---
 
-### ✔️ 1. `EmailProcessor` services/processadores/processador_email.rb:
+###  1. `EmailProcessor` services/processadores/processador_email.rb:
 
 Responsável por decidir qual parser utilizar com base no remetente do e-mail.
 
 ---
 
-### ✔️ 2. `BaseParser` services/parsers/base_parser.rb:
+###  2. `BaseParser` services/parsers/base_parser.rb:
 
 Define a interface comum para todos os parsers:
 
@@ -126,7 +126,7 @@ Define a interface comum para todos os parsers:
 
 ---
 
-### ✔️ 3. Parsers específicos
+###  3. Parsers específicos A e B
 
 São elas:
 
@@ -136,7 +136,7 @@ São elas:
 
 # Instalação e Execução (via Docker)
 
-Siga os passos abaixo para subir o ambiente completo.
+Siga os passos abaixo para subir o ambiente completo já com o Sidekiq no Ar.
 ---
 
 ```bash
@@ -145,6 +145,8 @@ git clone https://github.com/seu-usuario/rails-eml-processor.git
 cd rails-eml-processor
 ## Construir as imagens
 docker compose build
+## Construir e migrar banco
+docker compose run app rails db:create db:migrate
 ##  Subir os containers
 docker compose up
 
