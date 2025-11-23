@@ -19,7 +19,7 @@ O sistema utiliza **arquitetura extensível de parsers**, processamento em backg
 
 ## Uso do sistema
 
-### 1. Enviar arquivos `.eml` para processamento
+### 1. Enviar arquivos `.eml` para processamento e insert
 
 Em /arquivos_emails/new existe um formulário de upload:
 
@@ -27,6 +27,8 @@ Em /arquivos_emails/new existe um formulário de upload:
 - O upload dispara um **job Sidekiq**
 - O Sidekiq processa o arquivo em background
 - O parser apropriado é selecionado com base no remetente do e-mail
+- As infomasções do email são processadas e salvas no banco de dados.
+- Em caso de erro o sisetma informará.
 
 ---
 
