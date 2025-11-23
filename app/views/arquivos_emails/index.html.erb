@@ -29,18 +29,27 @@
           </thead>
   
           <tbody>
-            <% @clientes.limit(9).each do |c| %>
+            <% if @clientes.blank? %>
               <tr>
-                <td><%= c.nome %></td>
-                <td><%= c.email %></td>
-                <td class="text-end">
-                  <%= link_to clientes_index_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
-                    <i class="fa-solid fa-eye"></i>
-                  <% end %>
+                <td colspan="3" class="text-muted text-center py-3">
+                  Nenhum cliente encontrado.
                 </td>
               </tr>
+            <% else %>
+              <% @clientes.limit(9).each do |c| %>
+                <tr>
+                  <td><%= c.nome %></td>
+                  <td><%= c.email %></td>
+                  <td class="text-end">
+                    <%= link_to clientes_index_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
+                      <i class="fa-solid fa-eye"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
+          
         </table>
   
         <div class="text-end">
@@ -68,28 +77,38 @@
           </thead>
   
           <tbody>
-            <% @logs.limit(9).each do |log| %>
+            <% if @logs.blank? %>
               <tr>
-               <td>
-              <% if log.status == "sucesso" %>
-                <span class="badge bg-success">
-                  <i class="fa-solid fa-check me-1"></i> Sucesso
-                </span>
-              <% else %>
-                <span class="badge bg-danger">
-                  <i class="fa-solid fa-triangle-exclamation me-1"></i> Falha
-                </span>
-              <% end %>
-            </td>
-                <td><%= truncate(log.mensagem, length: 28) %></td>
-                <td class="text-end">
-                  <%= link_to arquivos_email_path(log.arquivo_email_id), class: "btn btn-outline-info btn-sm p-1" do %>
-                    <i class="fa-solid fa-eye"></i>
-                  <% end %>
+                <td colspan="3" class="text-muted text-center py-3">
+                  Nenhum processamento encontrado.
                 </td>
               </tr>
+            <% else %>
+              <% @logs.limit(9).each do |log| %>
+                <tr>
+                  <td>
+                    <% if log.status == "sucesso" %>
+                      <span class="badge bg-success">
+                        <i class="fa-solid fa-check me-1"></i> Sucesso
+                      </span>
+                    <% else %>
+                      <span class="badge bg-danger">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i> Falha
+                      </span>
+                    <% end %>
+                  </td>
+          
+                  <td><%= truncate(log.mensagem, length: 28) %></td>
+                  <td class="text-end">
+                    <%= link_to arquivos_email_path(log.arquivo_email_id), class: "btn btn-outline-info btn-sm p-1" do %>
+                      <i class="fa-solid fa-eye"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
+          
         </table>
   
         <div class="text-end">
@@ -99,7 +118,60 @@
         </div>
       </div>
     </div>
+
+
+
   
+  </div>
+
+  <div class="col-md-6">
+    <div class="card shadow-sm p-3" style="border-radius: 14px;">
+      <h4 class="mb-3 d-flex align-items-center">
+        <i class="fa-solid fa-folder-open me-2"></i> Arquivos
+      </h4>
+  
+      <table class="table table-sm align-middle" style="width: 98%;">
+        <thead>
+          <tr>
+            <th>Arquivo</th>
+            <th>Processado</th>
+            <th style="width: 55px;"></th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <% if @arquivos_email.blank? %>
+            <tr>
+              <td colspan="2" class="text-muted text-center py-3">
+                Nenhum arquivo enviado.
+              </td>
+            </tr>
+          <% else %>
+            <% @arquivos_email.limit(9).each do |arq| %>
+              <tr>
+                <td>
+                  <% if arq.arquivo_email.attached? %>
+                    <%= link_to arq.arquivo_email.filename.to_s, url_for(arq.arquivo_email) %>
+                  <% else %>
+                    Sem arquivo
+                  <% end %>
+                </td>
+                <td class="">
+                  <%= arq.processado %>
+                </td>
+                <td class="text-end">
+                  <%= link_to arquivos_email_path(arq), class: "btn btn-outline-info btn-sm p-1" do %>
+                    <i class="fa-solid fa-eye"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+  
+      
+    </div>
   </div>
   
   

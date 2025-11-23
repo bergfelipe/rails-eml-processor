@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'home/index'
   get 'logs_processamentos/index'
   get 'logs_processamentos/show'
   get 'clientes/index'
@@ -15,5 +16,6 @@ Rails.application.routes.draw do
 
 
   # Defines the root path route ("/")
-  root "arquivos_emails#new"
+  root 'home#index'
+
 end

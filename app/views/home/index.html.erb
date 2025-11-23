@@ -1,0 +1,177 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4 d-flex align-items-center">
+    <i class="fa-solid fa-chart-line me-2"></i> Dashboard
+  </h2>
+
+    <!-- CLIENTES -->
+    <div class="col-md-12">
+        <div class="card shadow-sm p-3" style="border-radius: 14px;">
+          <h4 class="mb-3 d-flex align-items-center">
+            <i class="fa-solid fa-users me-2"></i> Clientes
+          </h4>
+  
+          <table class="table table-sm align-middle" style="width: 98%;">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th style="width: 55px;"></th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <% if @clientes.blank? %>
+                <tr>
+                  <td colspan="3" class="text-muted text-center py-3">
+                    Nenhum cliente encontrado.
+                  </td>
+                </tr>
+              <% else %>
+                <% @clientes.limit(5).each do |c| %>
+                  <tr>
+                    <td><%= c.nome %></td>
+                    <td><%= c.email %></td>
+                    <td><%= c.telefone %></td>
+                    <td class="text-end">
+                      <%= link_to clientes_index_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
+                        <i class="fa-solid fa-eye"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+  
+          <div class="text-end">
+            <%= link_to clientes_index_path, class: "btn btn-outline-secondary btn-sm" do %>
+              <i class="fa-solid fa-list"></i> Ver todos
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+
+  <div class="row mt-4">
+
+
+
+    <!-- ARQUIVOS -->
+    <div class="col-md-6">
+      <div class="card shadow-sm p-3" style="border-radius: 14px;">
+        <h4 class="mb-3 d-flex align-items-center">
+          <i class="fa-solid fa-folder-open me-2"></i> Arquivos
+        </h4>
+
+        <table class="table table-sm align-middle" style="width: 98%;">
+            <thead>
+              <tr>
+                <th>Arquivo</th>
+                <th>Processado</th>
+                <th style="width: 55px;"></th>
+              </tr>
+            </thead>
+      
+            <tbody>
+              <% if @arquivos_email.blank? %>
+                <tr>
+                  <td colspan="2" class="text-muted text-center py-3">
+                    Nenhum arquivo enviado.
+                  </td>
+                </tr>
+              <% else %>
+                <% @arquivos_email.limit(5).each do |arq| %>
+                  <tr>
+                    <td>
+                      <% if arq.arquivo_email.attached? %>
+                        <%= link_to arq.arquivo_email.filename.to_s, url_for(arq.arquivo_email) %>
+                      <% else %>
+                        Sem arquivo
+                      <% end %>
+                    </td>
+                    <td class="">
+                      <%= arq.processado %>
+                    </td>
+                    <td class="text-end">
+                      <%= link_to arquivos_email_path(arq), class: "btn btn-outline-info btn-sm p-1" do %>
+                        <i class="fa-solid fa-eye"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+
+        <div class="text-end">
+          <%= link_to arquivos_emails_path, class: "btn btn-outline-secondary btn-sm" do %>
+            <i class="fa-solid fa-list"></i> Ver todos
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROCESSAMENTOS -->
+    <div class="col-md-6">
+      <div class="card shadow-sm p-3" style="border-radius: 14px;">
+        <h4 class="mb-3 d-flex align-items-center">
+          <i class="fa-solid fa-clock-rotate-left me-2"></i> Processamentos
+        </h4>
+
+        <table class="table table-sm align-middle" style="width: 98%;">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Mensagem</th>
+              <th style="width: 55px;"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% if @logs.blank? %>
+              <tr>
+                <td colspan="3" class="text-muted text-center py-3">
+                  Nenhum processamento encontrado.
+                </td>
+              </tr>
+            <% else %>
+              <% @logs.limit(5).each do |log| %>
+                <tr>
+                  <td>
+                    <% if log.status == "sucesso" %>
+                      <span class="badge bg-success">
+                        <i class="fa-solid fa-check me-1"></i> Sucesso
+                      </span>
+                    <% else %>
+                      <span class="badge bg-danger">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i> Falha
+                      </span>
+                    <% end %>
+                  </td>
+
+                  <td><%= truncate(log.mensagem, length: 28) %></td>
+                  <td class="text-end">
+                    <%= link_to arquivos_email_path(log.arquivo_email_id), class: "btn btn-outline-info btn-sm p-1" do %>
+                      <i class="fa-solid fa-eye"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div class="text-end">
+          <%= link_to logs_processamentos_index_path, class: "btn btn-outline-secondary btn-sm" do %>
+            <i class="fa-solid fa-list"></i> Ver todos
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
