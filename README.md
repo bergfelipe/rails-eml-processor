@@ -32,29 +32,73 @@ Em /arquivos_emails/new existe um formulário de upload:
 
 ---
 
-### 2. Listar clientes criados
+### 👥 2. Listar clientes criados
 
-A página **Customers** /clientes exibe:
+A página **Customers** (`/clientes`) exibe uma listagem com os dados básicos de cada cliente:
 
 - Nome
 - Email
 - Telefone
 - Produto de interesse
+- Botão pro Show
+---
+
+#### 🔎 Detalhes do cliente – Show (`/clientes/:id`)
+
+Ao clicar em um cliente, a página de **show** exibe:
+
+- Nome completo
+- Email
+- Telefone
+- Produto de interesse
+- Data de criação
+- Arquivo `.eml` relacionado
+
+Além disso, o show do cliente contém:
+
+- **Seção de log**: mostra o log completo referente ao e-mail que originou aquele cliente.
+- **Botão "Ver Log Completo"** → que redireciona para `/logs_processamentos/:id`  
+  (onde o usuário pode visualizar o processamento detalhado daquele e-mail).
 
 ---
 
-### 3. Visualizar logs de processamento
+### 📄 3. Visualizar logs de processamento
 
-A página de **logs** /logs_processamentos exibe:
+A página **Logs de Processamento** (`/logs_processamentos`) exibe uma listagem dos logs gerados pelos parsers:
 
 - Arquivo processado
-- Dados extraídos
-- Rementente(parse A ou B)
-- Produto (se existirem)
-- Criado em
+- Dados extraídos (nome, email, telefone, produto, etc.)
+- Remetente (Parser A ou Parser B)
+- Produto (quando identificado)
+- Criado em (timestamp)
 - Status: sucesso ou falha
 
 ---
+
+#### 🔎 Detalhes do log – Show (`/logs_processamentos/:id`)
+
+Ao clicar em um log específico, a página de **show** exibe:
+
+- Arquivo `.eml` original (nome do arquivo ou link para download)
+- Remetente identificado
+- Dados extraídos:
+  - Nome
+  - Email
+  - Telefone
+  - Produto
+  - Assunto
+- Parser utilizado
+- Mensagens de erro (se houver)
+- Status final (sucesso/falha)
+- Data e hora do processamento
+
+No show do log existe também:
+
+- **Seção do cliente gerado** (em caso de erro ele tenta indentificar duplicidade)
+- **Botão "Ver Cliente"** → que redireciona para `/clientes/:id`
+
+Isso permite navegar entre cliente ↔ log com facilidade.
+
 
 ## ⚙️ Arquitetura da Aplicação
 
