@@ -4,24 +4,20 @@
    <title>RailsEmlProcessor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- ✅ Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous">
+      rel="stylesheet">
 
-    <!-- ✅ Bootstrap Icons -->
+    <!-- Bootstrap Icons -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-    <!-- ✅ Font Awesome -->
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Mm0R+f6mZ3Fv2TQydF+iRkaZFTu0e9iyO8Q1rYXc/0zEbRjZZp7r2E4d3vN3zTFSzD9R1Kv6mJkMewZbYFv8cw=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -29,7 +25,64 @@
     <%= yield :head %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-light">
+
+    <!-- 🔥 NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark px-3" style="background:#0d1b2a;">
+      <div class="container-fluid">
+    
+        <a class="navbar-brand d-flex align-items-center" href="<%= root_path %>">
+          <i class="fa-solid fa-envelope-open-text me-2"></i>
+          Processador EML
+        </a>
+    
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto">
+            <!-- Clientes -->
+            <li class="nav-item">
+              <%= link_to clientes_index_path, class: "nav-link" do %>
+                <button class="btn btn-outline-light btn-sm d-flex align-items-center">
+                  <i class="fa-solid fa-users me-2"></i> Clientes
+                </button>
+              <% end %>
+            </li>
+    
+            <!-- Processamentos -->
+            <li class="nav-item ">
+              <%= link_to logs_processamentos_index_path, class: "nav-link" do %>
+                <button class="btn btn-outline-light btn-sm d-flex align-items-center">
+                  <i class="fa-solid fa-clock-rotate-left me-2"></i> Processamentos
+                </button>
+              <% end %>
+            </li>
+    
+            <!-- Novo Arquivo -->
+            <li class="nav-item ">
+              <%= link_to new_arquivos_email_path, class: "nav-link" do %>
+                <button class="btn btn-outline-light btn-sm d-flex align-items-center">
+                  <i class="fa-solid fa-file-circle-plus me-2"></i> Novo Arquivo
+                </button>
+              <% end %>
+            </li>
+    
+          </ul>
+        </div>
+    
+      </div>
+    </nav>
+    
+
+
+    <div class="container mb-5">
+      <%= yield %>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
   </body>
 </html>

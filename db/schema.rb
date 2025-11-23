@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_22_231312) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_23_020632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,8 +58,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_22_231312) do
     t.string "nome"
     t.string "email"
     t.string "telefone"
-    t.string "codigo_produto"
-    t.string "assunto"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -77,8 +75,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_22_231312) do
     t.jsonb "dados_extraidos"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "cliente_id"
+    t.string "remetente"
+    t.string "destinatario"
+    t.string "assunto"
+    t.string "produto"
     t.index ["arquivo_email_id"], name: "index_log_processamentos_on_arquivo_email_id"
+    t.index ["cliente_id"], name: "index_log_processamentos_on_cliente_id"
   end
 
   add_foreign_key "log_processamentos", "arquivo_emails"
+  add_foreign_key "log_processamentos", "clientes"
 end

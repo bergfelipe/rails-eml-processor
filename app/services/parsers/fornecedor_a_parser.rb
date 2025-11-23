@@ -7,18 +7,20 @@ module Parsers
         email: extrair_email,
         telefone: extrair_telefone,
         codigo_produto: extrair_produto,
-        assunto: assunto
+        assunto: assunto,
+        remetente: mail.from&.first,
+        destinatario: mail.to&.first
       }
     end
 
     private
 
     def extrair_nome
-      corpo[/Nome:\s*(.+)/i, 1]
+      corpo[/^(Nome completo|Nome do cliente|Nome|Cliente)\s*:\s*(.+)$/i, 2]
     end
 
     def extrair_email
-      corpo[/E-mail:\s*(.+)/i, 1]
+      corpo[/^(E-mail|Email|E-mail de contato|Email de contato|Contato)\s*:\s*(.+)$/i, 2]
     end
 
     def extrair_telefone
@@ -26,8 +28,7 @@ module Parsers
     end
 
     def extrair_produto
-      assunto[/Produto\s+([A-Z0-9]+)/i, 1] ||
-      corpo[/c[oó]digo\s+([A-Z0-9]+)/i, 1]
+      corpo[/^(Produto|Código|Codigo|Produto desejado)\s*:\s*([A-Z0-9\-_]+)/i, 2]
     end
 
   end
