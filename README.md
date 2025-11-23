@@ -7,13 +7,13 @@ O sistema utiliza **arquitetura extensível de parsers**, processamento em backg
 
 ## Tecnologias Utilizadas
 
-- **Ruby 3.0.6**
-- **Rails 7.1.6**
-- **PostgreSQL 14**
-- **Redis 7**
-- **Sidekiq**
-- **Docker / Docker Compose**
-- **Bootstrap 5**
+[![Docker](https://img.shields.io/badge/Docker-0db7ed?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Ruby on Rails](https://img.shields.io/badge/Rails-c92228?style=flat&logo=rubyonrails&logoColor=white)](https://rubyonrails.org/)
+[![Ruby](https://img.shields.io/badge/Ruby-CC342D?style=flat&logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-31648C?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-dc382d?style=flat&logo=redis&logoColor=white)](https://redis.io/)
+[![Sidekiq](https://img.shields.io/badge/Sidekiq-A33626?style=flat&logo=ruby&logoColor=white)](https://sidekiq.org/)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-7952b3?style=flat&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
 ---
 
