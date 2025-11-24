@@ -29,11 +29,12 @@ module Processadores
         if cliente_existente
           return { erro: "Cliente já existe (e-mail ou telefone duplicado).", dados: dados }
         end
-  
+  byebug
         cliente = Cliente.create!(
           nome: dados[:nome],
           email: dados[:email],
-          telefone: dados[:telefone]
+          telefone: dados[:telefone],
+          produto: dados[:codigo_produto]
         )
   
         dados[:cliente_id] = cliente.id

@@ -17,6 +17,7 @@
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Telefone</th>
+                <th>Produto</th>
                 <th style="width: 55px;"></th>
               </tr>
             </thead>
@@ -34,6 +35,7 @@
                     <td><%= c.nome %></td>
                     <td><%= c.email %></td>
                     <td><%= c.telefone %></td>
+                      <td><%= c.produto %></td>
                     <td class="text-end">
                       <%= link_to cliente_path(c), class: "btn btn-outline-info btn-sm p-1" do %>
                         <i class="fa-solid fa-eye"></i>

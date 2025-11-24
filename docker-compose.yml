@@ -16,6 +16,8 @@ services:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
       DATABASE_NAME: rails_eml_processor_development
+      # Quantos dias manter logs na tabela log_processamentos
+      LOG_RETENTION_DAYS: 30
 
   sidekiq:
     build: .
@@ -30,6 +32,8 @@ services:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
       DATABASE_NAME: rails_eml_processor_development
+      # Quantos dias manter logs na tabela log_processamentos
+      LOG_RETENTION_DAYS: 30
 
   redis:
     image: redis:7-alpine

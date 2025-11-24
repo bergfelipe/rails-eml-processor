@@ -28,13 +28,14 @@
         <p><strong>ID:</strong> <%= @cliente.id %></p>
         <p><strong>Email:</strong> <%= @cliente.email %></p>
         <p><strong>Telefone:</strong> <%= @cliente.telefone %></p>
+        <p><strong>Produto:</strong> <%= @cliente.produto %></p>
 
         <hr>
 
         <p class="text-muted mb-0">Criado em: <%= l @cliente.created_at, format: :short %></p>
       </div>
     </div>
-
+    <% if @logs_cliente.present? %>
     <!-- CARD PROCESSAMENTOS RELACIONADOS -->
     <div class="col-md-8">
       <div class="card shadow-sm p-3" style="border-radius: 14px;">
@@ -42,26 +43,19 @@
           <i class="fa-solid fa-clock-rotate-left text-primary me-2"></i>
           Processamentos Relacionados
         </h4>
-
-        <% logs_cliente = LogProcessamento.where(cliente_id: @cliente.id).order(created_at: :desc) %>
-
-        <% if logs_cliente.blank? %>
-          <p class="text-muted">Nenhum processamento relacionado a este cliente.</p>
-        <% else %>
-
           <table class="table table-sm align-middle">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Status</th>
                 <th>Remetente</th>
-                <th>Produto</th>
+                <th>Mensagem</th>
                 <th style="width: 50px;"></th>
               </tr>
             </thead>
 
             <tbody>
-              <% logs_cliente.each do |log| %>
+              <% @logs_cliente.each do |log| %>
                 <tr>
                   <td><%= log.id %></td>
 
@@ -80,9 +74,9 @@
                   <td>
                     <%= log.remetente %>
                   </td>
-                  <td>
-                  <%= log.produto %>
-                </td>
+                 
+                  <td><%= truncate(log.mensagem, length: 40) %></td>
+                
 
                   <td class="text-end">
                     <%= link_to logs_processamento_path(log),
@@ -94,10 +88,8 @@
               <% end %>
             </tbody>
           </table>
-
-        <% end %>
-
       </div>
     </div>
+            <% end %>
   </div>
 </div>
