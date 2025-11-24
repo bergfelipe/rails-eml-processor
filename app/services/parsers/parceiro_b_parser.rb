@@ -28,9 +28,13 @@ module Parsers
     end
 
     def extrair_produto
-      produto = corpo[/^(Produto|Código|Código do produto|Produto de interesse|Produto desejado)\s*:\s*([A-Z0-9\-_]+)/i, 2]
+      produto = corpo[/^(Produto|Descrição|Código|Código do produto|Produto de interesse|Produto desejado)\s*:\s*([A-Z0-9\-_]+)/i, 2]
       return produto if produto.present?
-      corpo[/c[oó]digo\s+([A-Z0-9\-_]+)/i, 1]
+      produto = corpo[/c[oó]digo\s+([A-Z0-9\-_]+)/i, 1]
+      return produto if produto.present?
+      produto = corpo[/produto\s+([A-Z0-9\-_]+)/i, 1]
+      return produto if produto.present?
+      corpo[/\b([A-Z]{2,}\d{2,})\b/, 1]
     end
     
   end
