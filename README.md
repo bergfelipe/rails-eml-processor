@@ -141,6 +141,41 @@ São elas:
 - `ParceiroBParser` services/parsers/parceiro_b_parser.rb
 
 
+## Testes Automatizados (RSpec)
+
+Este projeto inclui uma suíte completa de testes automatizados utilizando **RSpec**, abrangendo:
+
+- Parsers (`FornecedorAParser` e `ParceiroBParser`)
+- Classe base `BaseParser`
+- Classe de processamento `ProcessadorEmail`
+- Rotas e controllers essenciais
+- Integração com Active Storage (mockado nos testes)
+
+Todos os testes foram configurados para rodar corretamente dentro do ambiente Docker.
+
+### Como rodar os testes
+
+Para executar toda a suíte de testes, utilize: docker compose exec app bundle exec rspec
+Os testes utilizam fixtures reais `.eml` localizados em: spec/fixtures/emails/
+Durante a execução, o Active Storage é totalmente **mockado** para evitar dependências externas, garantindo que os testes sejam determinísticos.
+
+---
+
+## Integração Contínua (CI) – Diferencial
+
+Este projeto foi preparado para funcionar com **GitHub Actions**, permitindo que a suíte de testes seja executada automaticamente a cada **push** ou **pull request**.
+
+Com o pipeline de CI ativado, o GitHub configurará automaticamente um ambiente contendo Ruby, PostgreSQL e Redis, carregará o schema do banco de testes e executará todos os testes RSpec.  
+Isso garante que cada alteração no repositório seja validada antes de ser integrada, aumentando a confiabilidade e a qualidade do código.
+
+Para ativar a CI, basta adicionar um workflow dentro da pasta: .github/workflows/
+
+
+
+
+
+
+
 # Instalação e Execução (via Docker)
 
 Siga os passos abaixo para subir o ambiente completo já com o Sidekiq no Ar.
