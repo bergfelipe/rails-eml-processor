@@ -9,15 +9,17 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
-      - redis
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
     environment:
       DATABASE_HOST: db
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
       DATABASE_NAME: rails_eml_processor_development
-      # Quantos dias manter logs na tabela log_processamentos
       LOG_RETENTION_DAYS: 30
+      REDIS_URL: redis://redis:6379/0
 
   sidekiq:
     build: .
@@ -25,20 +27,27 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db
-      - redis
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
     environment:
       DATABASE_HOST: db
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
       DATABASE_NAME: rails_eml_processor_development
-      # Quantos dias manter logs na tabela log_processamentos
       LOG_RETENTION_DAYS: 30
+      REDIS_URL: redis://redis:6379/0
 
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
   db:
     image: postgres:14
@@ -50,6 +59,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   postgres_data:

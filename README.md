@@ -99,6 +99,13 @@ No show do log existe também:
 
 Isso permite navegar entre cliente ↔ log com facilidade.
 
+## Limpeza periódica dos logs (`LOG_RETENTION_DAYS`)
+
+O projeto utiliza a variável de ambiente **`LOG_RETENTION_DAYS`** para definir por quantos dias os registros de processamento serão mantidos no banco de dados.
+Essa variável já está configurada no `docker-compose.yml` como 30 dias:
+LOG_RETENTION_DAYS: 30
+
+
 
 ## Arquitetura da Aplicação
 
