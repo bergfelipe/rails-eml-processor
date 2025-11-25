@@ -172,23 +172,30 @@ Para ativar a CI, basta adicionar um workflow dentro da pasta: .github/workflows
 
 
 
-
-
-
-
 # Instalação e Execução (via Docker)
 
-Siga os passos abaixo para subir o ambiente completo já com o Sidekiq no Ar.
+Siga os passos abaixo para subir o ambiente completo já com o Sidekiq, Redis, PostgreSQL e o ambiente de testes funcionando.
+
 ---
 
 ```bash
-## Clonar o repositório
-git clone https://github.com/seu-usuario/rails-eml-processor.git
+# 1. Clonar o repositório
+git clone https://github.com/bergfelipe/rails-eml-processor.git
 cd rails-eml-processor
-## Construir as imagens
+
+# 2. Construir as imagens
 docker compose build
-## Construir e migrar banco
-docker compose run app rails db:create db:migrate
-##  Subir os containers
-docker compose up
+
+# 3. Subir os containers (modo background)
+docker compose up -d
+
+# 4. Criar e carregar o banco de dados (desenvolvimento)
+docker compose exec app rails db:create db:migrate
+
+# 5. Preparar o banco de testes
+docker compose exec app rails db:create db:schema:load RAILS_ENV=test
+
+# 6. Executar a suíte de testes RSpec
+docker compose exec app bundle exec rspec
+
 
