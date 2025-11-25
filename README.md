@@ -155,7 +155,7 @@ Todos os testes foram configurados para rodar corretamente dentro do ambiente Do
 
 ### Como rodar os testes
 
-Para executar toda a suíte de testes, utilize: docker compose exec app bundle exec rspec
+Para executar toda a suíte de testes, utilize: **docker compose exec app bundle exec rspec**
 Os testes utilizam fixtures reais `.eml` localizados em: spec/fixtures/emails/
 Durante a execução, o Active Storage é totalmente **mockado** para evitar dependências externas, garantindo que os testes sejam determinísticos.
 
