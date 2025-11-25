@@ -40,26 +40,6 @@ A página **Customers** (`/clientes`) exibe uma listagem com os dados básicos d
 - Email
 - Telefone
 - Produto de interesse
-- Botão pro Show
----
-
-#### 🔎 Detalhes do cliente – Show (`/clientes/:id`)
-
-Ao clicar em um cliente, a página de **show** exibe:
-
-- Nome completo
-- Email
-- Telefone
-- Produto de interesse
-- Data de criação
-- Arquivo `.eml` relacionado
-
-Além disso, o show do cliente contém:
-
-- **Seção de log**: mostra o log completo referente ao e-mail que originou aquele cliente.
-- **Botão "Ver Log Completo"** → que redireciona para `/logs_processamentos/:id`  
-  (onde o usuário pode visualizar o processamento detalhado daquele e-mail).
-
 ---
 
 ### 3. Visualizar logs de processamento
@@ -75,36 +55,11 @@ A página **Logs de Processamento** (`/logs_processamentos`) exibe uma listagem 
 
 ---
 
-#### 🔎 Detalhes do log – Show (`/logs_processamentos/:id`)
-
-Ao clicar em um log específico, a página de **show** exibe:
-
-- Arquivo `.eml` original (nome do arquivo ou link para download)
-- Remetente identificado
-- Dados extraídos:
-  - Nome
-  - Email
-  - Telefone
-  - Produto
-  - Assunto
-- Parser utilizado
-- Mensagens de erro (se houver)
-- Status final (sucesso/falha)
-- Data e hora do processamento
-
-No show do log existe também:
-
-- **Seção do cliente gerado** (em caso de erro ele tenta indentificar duplicidade)
-- **Botão "Ver Cliente"** → que redireciona para `/clientes/:id`
-
-Isso permite navegar entre cliente ↔ log com facilidade.
-
 ## Limpeza periódica dos logs (`LOG_RETENTION_DAYS`)
 
 O projeto utiliza a variável de ambiente **`LOG_RETENTION_DAYS`** para definir por quantos dias os registros de processamento serão mantidos no banco de dados.
 Essa variável já está configurada no `docker-compose.yml` como 30 dias:
 LOG_RETENTION_DAYS: 30
-
 
 
 ## Arquitetura da Aplicação
