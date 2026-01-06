@@ -1,4 +1,4 @@
-# Processador EML – Desafio Técnico C2S (Pleno)
+# Processador EML – Desafio Técnico(Pleno)
 
 Aplicação Ruby on Rails para processar arquivos **.eml**, extrair informações estruturadas e armazenar dados de clientes e logs de processamento.  
 O sistema utiliza **arquitetura extensível de parsers**, processamento em background com **Sidekiq + Redis**, interface web simples e ambiente totalmente containerizado com **Docker + Docker Compose**.
